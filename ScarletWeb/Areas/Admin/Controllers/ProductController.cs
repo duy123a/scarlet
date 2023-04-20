@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Scarlet.DataAccess.Repository.IRepository;
 using Scarlet.Models;
 using Scarlet.Models.ViewModels;
+using Scarlet.Utility;
+using System.Data;
 
 namespace ScarletWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -96,8 +100,7 @@ namespace ScarletWeb.Areas.Admin.Controllers
             }
             else
             {
-                // You need to populate the dropdown again if error happens
-                // Well actually not need since I remove this part and it works fine
+                // You need to populate the dropdown again if error happens/ validate fails
                 obj.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,

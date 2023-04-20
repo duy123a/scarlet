@@ -14,6 +14,11 @@ namespace Scarlet.DataAccess.Data
         // Remember to use add-migration *name* after adding stuffs here in package manager console
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Company> Companies { get; set; } = null!;
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
+        public DbSet<OrderHeader> OrderHeaders { get; set; } = null!;
+        public DbSet<OrderDetail> OrderDetails { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Need to add this line if want to use IdentityDbContext
@@ -23,6 +28,11 @@ namespace Scarlet.DataAccess.Data
                     new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                     new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                     new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+                );
+            modelBuilder.Entity<Company>().HasData(
+                    new Company { Id = 1, Name = "Tech Solution", StreetAddress = "123 Tech St", City = "Tech City", PostalCode = "12121", State = "IL", PhoneNumber = "666999000" },
+                    new Company { Id = 2, Name = "Vivid Books", StreetAddress = "999 Vid St", City = "Vid City", PostalCode = "66666", State = "IL", PhoneNumber = "777999000" },
+                    new Company { Id = 3, Name = "Readers Club", StreetAddress = "666 Main St", City = "Lala Land", PostalCode = "99999", State = "NY", PhoneNumber = "111333555" }
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product
