@@ -60,7 +60,7 @@ namespace ScarletWeb.Areas.Customer.Controllers
                 TempData["success"] = "Cart updated successfully";
                 _unitOfWork.Save();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             else
             {
