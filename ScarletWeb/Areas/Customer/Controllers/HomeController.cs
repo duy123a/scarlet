@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Scarlet.DataAccess.Repository.IRepository;
 using Scarlet.Models;
+using Scarlet.Utility;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -51,15 +52,17 @@ namespace ScarletWeb.Areas.Customer.Controllers
                     // shopping car exist
                     cartFromDb.Count += shoppingCart.Count;
                     _unitOfWork.ShoppingCart.Update(cartFromDb);
+                    _unitOfWork.Save();
                 }
                 else
                 {
                     // add cart record
                     _unitOfWork.ShoppingCart.Add(shoppingCart);
+                    _unitOfWork.Save();
+                    HttpContext.Session.SetInt32(SD.SessionCart,
+                        _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
                 }
                 TempData["success"] = "Cart updated successfully";
-                _unitOfWork.Save();
-
                 return RedirectToAction("Index");
             }
             else
