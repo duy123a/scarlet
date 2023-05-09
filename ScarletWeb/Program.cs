@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Scarlet.DataAccess.Data;
+using Scarlet.DataAccess.DbInitializer;
 using Scarlet.DataAccess.Repository;
 using Scarlet.DataAccess.Repository.IRepository;
 using Scarlet.Utility;
@@ -48,6 +49,7 @@ namespace Scarlet
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
             var app = builder.Build();
 
@@ -71,6 +73,8 @@ namespace Scarlet
 
             app.UseSession();
 
+            SeedDatabase();
+
             app.MapRazorPages();
 
             app.MapControllerRoute(
@@ -78,6 +82,15 @@ namespace Scarlet
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+
+            void SeedDatabase()
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                    dbInitializer.Initializer();
+                }
+            }
         }
     }
 }
