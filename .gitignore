@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Custom product image
-ScarletWeb/wwwroot/images/product/*
+# Test product image
+ScarletWeb/wwwroot/images/product/*.jpg
