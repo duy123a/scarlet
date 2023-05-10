@@ -20,24 +20,41 @@ namespace ScarletWeb.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            ShoppingCartVM = new()
+            try
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product"),
-                OrderHeader = new()
-            };
+                if (id != null)
+                {
+                    OrderHeader orderHeaderFromDb = _unitOfWork.OrderHeader.Get(u => u.Id == id)!;
+                    List<OrderDetail> orderDetailListFromDb = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == id).ToList()!;
 
-            foreach (var cart in ShoppingCartVM.ShoppingCartList)
-            {
-                cart.Price = GetPriceBasedOnQuantity(cart) ?? 0;
-                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                    _unitOfWork.OrderHeader.Remove(orderHeaderFromDb);
+                    _unitOfWork.OrderDetail.RemoveRange(orderDetailListFromDb);
+                    _unitOfWork.Save();
+                }
+
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                ShoppingCartVM = new()
+                {
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product"),
+                    OrderHeader = new()
+                };
+
+                foreach (var cart in ShoppingCartVM.ShoppingCartList)
+                {
+                    cart.Price = GetPriceBasedOnQuantity(cart) ?? 0;
+                    ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
+
+                return View(ShoppingCartVM);
             }
-
-            return View(ShoppingCartVM);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
         public IActionResult Summary()
         {
@@ -127,7 +144,7 @@ namespace ScarletWeb.Areas.Customer.Controllers
                 {
                     // can't use relvative for this one
                     SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-                    CancelUrl = domain + $"customer/cart/index",
+                    CancelUrl = domain + $"customer/cart/index?id={ShoppingCartVM.OrderHeader.Id}",
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
                 };
