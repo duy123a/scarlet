@@ -122,7 +122,7 @@ namespace ScarletWeb.Areas.Customer.Controllers
             {
                 // it is regular customer account and we need to capture payment
                 // stripe logic
-                var domain = "https://localhost:7047/";
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new SessionCreateOptions
                 {
                     // can't use relvative for this one
