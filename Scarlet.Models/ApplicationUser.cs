@@ -17,6 +17,8 @@ namespace Scarlet.Models
         public int? CompanyId { get; set; }
         [ForeignKey("CompanyId")]
         [ValidateNever]
-        public Company Company { get; set; } = null!;
+        public Company? Company { get; set; } = null;
+        [NotMapped]
+        public string Role { get; set; }
     }
 }
