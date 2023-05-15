@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Test product image
-ScarletWeb/wwwroot/images/product/*.jpg
+ScarletWeb/wwwroot/images/products
