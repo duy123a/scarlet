@@ -72,7 +72,7 @@ namespace ScarletWeb.Areas.Customer.Controllers
             }
         }
 
-        public IActionResult Privacy()
+        public IActionResult Readme()
         {
             return View();
         }
