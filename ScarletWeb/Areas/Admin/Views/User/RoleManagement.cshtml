@@ -28,7 +28,7 @@
                 @if (Model.ApplicationUser.Role == SD.Role_Company)
                 {
                     companyVisible = "display:block";
-                    }
+                }
                 <div class="form-floating py-2 col-12">
                     <select asp-for="ApplicationUser.CompanyId" style="@companyVisible" asp-items="@Model.CompanyList" class="form-select">
                     </select>

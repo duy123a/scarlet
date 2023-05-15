@@ -14,6 +14,7 @@ namespace Scarlet.DataAccess.Data
         // Remember to use add-migration *name* after adding stuffs here in package manager console
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ProductImage> ProductImages { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
@@ -47,7 +48,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 85,
                     Price100 = 80,
                     CategoryId = 1,
-                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -61,7 +61,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 25,
                     Price100 = 20,
                     CategoryId = 1,
-                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -75,7 +74,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 40,
                     Price100 = 35,
                     CategoryId = 2,
-                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -89,7 +87,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 60,
                     Price100 = 55,
                     CategoryId = 2,
-                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -103,7 +100,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 25,
                     Price100 = 20,
                     CategoryId = 2,
-                    ImageUrl = "",
                 },
                 new Product
                 {
@@ -117,7 +113,6 @@ namespace Scarlet.DataAccess.Data
                     Price50 = 22,
                     Price100 = 20,
                     CategoryId = 3,
-                    ImageUrl = "",
                 }
                 );
         }

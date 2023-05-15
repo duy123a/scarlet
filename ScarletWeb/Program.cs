@@ -37,6 +37,12 @@ namespace Scarlet
                 options.AppSecret = "0b9d81e9f004dbf2094ad853626a2d44";
             });
 
+            builder.Services.AddAuthentication().AddMicrosoftAccount(options =>
+            {
+                options.ClientId = "f4a2ba19-239c-4df1-bb16-45bda7f2fe05";
+                options.ClientSecret = "MTG8Q~jUhrrAPBTeJxWR_Y6HSichw529AdKn3c2.";
+            });
+
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {

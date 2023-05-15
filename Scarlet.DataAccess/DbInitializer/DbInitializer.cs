@@ -51,7 +51,7 @@ namespace Scarlet.DataAccess.DbInitializer
                     State = "IL",
                     PostalCode = "23422",
                     City = "Chicago"
-                }, "7551656As!").GetAwaiter().GetResult();
+                }, "Admin123*").GetAwaiter().GetResult();
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "testadmin@gmail.com")!;
                 _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();

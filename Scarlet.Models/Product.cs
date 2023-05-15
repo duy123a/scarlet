@@ -37,6 +37,6 @@ namespace Scarlet.Models
         [ValidateNever]
         public Category Category { get; set; } = null!;
         [ValidateNever]
-        public string ImageUrl { get; set; } = string.Empty;
+        public List<ProductImage> ProductImages { get; set; }
     }
 }
